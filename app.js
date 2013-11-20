@@ -1,24 +1,29 @@
-var express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    util = require('util'),
-    fs = require('fs'),
-    reload = require('reload'),
-    assert = require('assert'),
-    sass = require('node-sass');
+var express = require('express')
+    , http = require('http')
+    , path = require('path')
+    , util = require('util')
+    , fs = require('fs')
+    , reload = require('reload')
+    , assert = require('assert')
+    , sass = require('node-sass');
 
-process.development.PORT = 33840;
-process.production.PORT = 33841;
-
+var config = { env: 'development' // 'development' or 'production'
+             , development: {
+                    port: 33840
+                }
+             , production: {
+                    port: 33841
+                }
+             };
 
 var app = express();
 
 
-var publicDir = path.join(__dirname, 'public'),
-    clientDir = path.join(__dirname, 'client');
+var publicDir = path.join(__dirname, 'public')
+    , clientDir = path.join(__dirname, 'client');
 
-app.configure('development', function(){
-    app.set('port', process.env.PORT || 3000);
+app.configure(config.env, function(){
+    app.set('port', config[config.env].port);
     app.use(express.logger('dev'));
     app.use(express.bodyParser()); //parses json, multi-part (file), url-encoded
     app.use(app.router); //need to be explicit, (automatically adds it if you forget)
