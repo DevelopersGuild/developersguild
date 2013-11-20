@@ -7,6 +7,8 @@ var express = require('express'),
     assert = require('assert'),
     sass = require('node-sass');
 
+process.development.PORT = 33840;
+process.production.PORT = 33841;
 
 
 var app = express();
