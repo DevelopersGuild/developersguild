@@ -1,5 +1,5 @@
 {
-	"env": "development",
+	"env": "production",
 	"development":  { 
 		"port": 33840
     }
