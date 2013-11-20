@@ -17,7 +17,7 @@ var app = express();
 var publicDir = path.join(__dirname, 'public'),
     clientDir = path.join(__dirname, 'client');
 
-app.configure('development', function(){
+app.configure('deployment', function(){
     app.set('port', process.env.PORT || 3000);
     app.use(express.logger('dev'));
     app.use(express.bodyParser()); //parses json, multi-part (file), url-encoded
