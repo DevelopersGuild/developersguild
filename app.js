@@ -1,66 +1,48 @@
-var express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    util = require('util'),
-    fs = require('fs'),
-    reload = require('reload'),
-    assert = require('assert'),
-    sass = require('node-sass');
+var express = require('express')
+    , http = require('http')
+    , path = require('path')
+    , util = require('util')
+    , fs = require('fs')
+    , reload = require('reload')
+    , assert = require('assert')
+    , sass = require('node-sass');
 
-process.development.PORT = 33840;
-process.production.PORT = 33841;
-
-
-var app = express();
-
-
-var publicDir = path.join(__dirname, 'public'),
-    clientDir = path.join(__dirname, 'client');
-
-app.configure('deployment', function(){
-    app.set('port', process.env.PORT || 3000);
-    app.use(express.logger('dev'));
-    app.use(express.bodyParser()); //parses json, multi-part (file), url-encoded
-    app.use(app.router); //need to be explicit, (automatically adds it if you forget)
-    app.use(express.static(clientDir)); //should cache static assets
-});
-
-//var db = require('mongojs').connect("localhost/developersguild", [app.settings.env]);
-/*
-db.main.save({'test': 1234}, function(err, obj){
-    if(!err && obj) console.log("Saved " + obj._id + " to db.\n")
-});
-
-db.main.find({'test' : 1234}, function(err, obj){ 
-    if(err || !obj){
-        console.log("Error finding object.\n");
-        return false;
+fs.readFile(__dirname + '/config.json', 'utf8', function (err, data) {
+    if (err) {
+        console.log('Error reading config: ' + err);
+        process.exit(1);
     }
-    console.log("Found object " + obj[0]._id);
+    var config = JSON.parse(data)
+    
+    process.env.NODE_ENV = config.env;
 
-});
-*/
-app.get('*', function(req, res) {
-    //res.sendfile(path.join(publicDir, 'index.html'))
-    console.log(req.url);
+    var app = express()
+        , publicDir = path.join(__dirname, 'public')
+        , clientDir = path.join(__dirname, 'client')
+        , db = require('mongojs').connect('localhost/developersguild', [app.settings.env]);
 
-    fs.exists(path.join(publicDir, req.url), function(exists) {
-        console.log(exists);
-        if(exists){
-            res.sendfile(path.join(publicDir, req.url));
-        }else{
-            res.send('404');
-        }
+    app.configure(app.settings.env, function(){
+        app.set('port', config[app.settings.env].port);
+        app.use(express.logger('dev'));
+        app.use(express.bodyParser()); //parses json, multi-part (file), url-encoded
+        app.use(app.router); //need to be explicit, (automatically adds it if you forget)
+        app.use(express.static(clientDir)); //should cache static assets
+    });
+    
+    app.get('*', function(req, res) {
+        fs.exists(path.join(publicDir, req.url), function(exists) {
+            if(exists){
+                res.sendfile(path.join(publicDir, req.url));
+            }else{
+                res.send('404');
+            }
+        });
     });
 
+    var server = http.createServer(app);
+    reload(server, app);
+    server.listen(app.get('port'), function(){
+        console.log("\n\nNode.js server listening on port " + app.get('port') + " (" + app.settings.env + ").");
+    });
 
-});
-
-var server = http.createServer(app);
-
-//reload code here
-reload(server, app);
-
-server.listen(app.get('port'), function(){
-    console.log("Web server listening on port " + app.get('port'));
 });
