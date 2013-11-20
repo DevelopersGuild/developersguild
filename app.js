@@ -8,12 +8,10 @@ var express = require('express')
     , sass = require('node-sass');
 
 var config = { env: 'development' // 'development' or 'production'
-             , development: {
-                    port: 33840
-                }
-             , production: {
-                    port: 33841
-                }
+             , development: { port: 33840
+                            }
+             , production: { port: 33841
+                           }
              };
 
 var app = express();
@@ -22,13 +20,17 @@ var app = express();
 var publicDir = path.join(__dirname, 'public')
     , clientDir = path.join(__dirname, 'client');
 
-app.configure(config.env, function(){
+
+
+app.configure(app.settings.env, function(){
     app.set('port', config[config.env].port);
     app.use(express.logger('dev'));
     app.use(express.bodyParser()); //parses json, multi-part (file), url-encoded
     app.use(app.router); //need to be explicit, (automatically adds it if you forget)
     app.use(express.static(clientDir)); //should cache static assets
 });
+
+console.log(app.settings.env);
 
 //var db = require('mongojs').connect("localhost/developersguild", [app.settings.env]);
 /*
