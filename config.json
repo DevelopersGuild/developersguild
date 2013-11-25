@@ -1,9 +1,20 @@
 {
-	"env": "development",
-	"development":  { 
-		"port": 33840
-    }
-    , "production": { 
-    	"port": 33841
+	"env": {
+		"use": "development",
+		"development":  { 
+			"port": 13370
+	    }
+	    , "production": { 
+	    	"port": 13371
+	    }
+    },
+    "mongo": {
+    	"ip": "localhost",
+    	"db": "developersguild"
+    },
+    "fs": {
+    	"publicDir": "/public",
+    	"clientDir": "/client",
+    	"scss": "/scss"
     }
 }

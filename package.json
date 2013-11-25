@@ -8,6 +8,8 @@
         "mongojs" : "0.9.6",
         "path": "0.4.9",
         "reload": "0.1.0",
-        "node-sass": "0.7.0" 
+        "node-sass": "0.7.0",
+        "underscore": "1.5.2",
+        "colors": "1.6.2" 
     }
 }

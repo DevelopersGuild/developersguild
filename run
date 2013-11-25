@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mongod -vvvvvvv&
+supervisor -e 'html|json|scss|js' -w .,./public,./public/js node app.js
