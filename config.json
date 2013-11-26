@@ -1,11 +1,11 @@
 {
 	"env": {
-		"use": "development",
+		"use": "production",
 		"development":  { 
-			"port": 13370
+			"port": 33840
 	    }
 	    , "production": { 
-	    	"port": 13371
+	    	"port": 33841
 	    }
     },
     "mongo": {
