@@ -5,7 +5,8 @@
     "private": true,
     "dependencies": {
         "express": "3.4.3",
-        "mongojs" : "0.9.6",
+        "mongojs": "0.9.6",
+        "socket.io": "0.9.16",
         "path": "0.4.9",
         "reload": "0.1.0",
         "node-sass": "0.7.0",

@@ -63,12 +63,61 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
         });
     });
 
+    var server = http.createServer(app)
+      , io = require('socket.io').listen(server).set('log level', 1);
 
-
-    var server = http.createServer(app);
     reload(server, app);
     server.listen(app.get('port'), function(){
         console.log("\nNode.js server listening on port ".yellow.bold + (app.get('port')+"").cyan.bold + " (".red.bold + app.settings.env.magenta + ").".red.bold);
     });
 
+    fs.readFile(path.join(__dirname, '/private/join/join.json'), 'utf8', function (err, json) {
+
+      if (err) {
+        console.log('Error reading json file: ' + err);
+        return false;
+      }
+      json = JSON.parse(json);
+
+      io.sockets.on('connection', function (socket) {
+
+        socket.emit('command', 'clear');
+        socket.emit('terminalOutput', { output: json.desktop.connect});
+
+        socket.on('terminalInput', function (data) {
+          if(data.input){
+            if(data.input.toLowerCase() === "clear"){
+              socket.emit('command', 'clear');
+            }else if(data.input.toLowerCase() === "motd"){
+              socket.emit('terminalOutput', { output: json.desktop.connect});
+            }else if(data.input.toLowerCase() === "broadcast"){
+              socket.broadcast.emit('terminalOutput', { output: "\n"+data.input });
+              socket.emit('terminalOutput', { output: data.input });
+            }else{
+              socket.emit('terminalOutput', { output: data.input });
+            }
+          }
+        });
+      });
+    });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
