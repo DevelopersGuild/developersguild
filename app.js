@@ -63,13 +63,13 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
         });
     });
 
-    var server = http.createServer(app)
+    var server = app.listen(app.get('port'), function(){
+            console.log("\nNode.js server listening on port ".yellow.bold + (app.get('port')+"").cyan.bold + " (".red.bold + app.settings.env.magenta + ").".red.bold);
+        })
       , io = require('socket.io').listen(server).set('log level', 1);
 
     reload(server, app);
-    server.listen(app.get('port'), function(){
-        console.log("\nNode.js server listening on port ".yellow.bold + (app.get('port')+"").cyan.bold + " (".red.bold + app.settings.env.magenta + ").".red.bold);
-    });
+    server
 
     fs.readFile(path.join(__dirname, '/private/join/join.json'), 'utf8', function (err, json) {
 
