@@ -30,6 +30,13 @@
 		$('#terminalInput').focus();
 	});
 
+	socket.on('connect', function () {
+		$('#loaderContainer').css({
+			display: 'none',
+			visibility: 'hidden'
+		});
+	});
+
 	socket.on('terminalOutput', function (data) {
 		$('#terminalOutput').append(data.output);
 	});
