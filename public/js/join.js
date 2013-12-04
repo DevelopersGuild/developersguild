@@ -1,6 +1,6 @@
 (function($){
 
-	var socket = io.connect('http://'+window.location.host)
+	var socket = io.connect('http://'+window.location.host, {'connect timeout': 4000})
 	  , history = []
 	  , historyPointer = 0;
 
