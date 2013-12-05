@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "newrelic": "1.1.1",
         "express": "3.4.3",
         "mongojs": "0.9.6",
         "socket.io": "0.9.16",

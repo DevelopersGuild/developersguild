@@ -1,4 +1,5 @@
-var express = require('express')
+var newrelic = require('newrelic')
+  , express = require('express')
   , http = require('http')
   , _ = require('underscore')
   , path = require('path')
@@ -7,7 +8,8 @@ var express = require('express')
   , reload = require('reload')
   , assert = require('assert')
   , sass = require('node-sass')
-  , colors = require('colors');
+  , colors = require('colors')
+  , terminal = require('./modules/terminal.js');
 
 fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
     if (err) {
@@ -69,55 +71,31 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
       , io = require('socket.io').listen(server).set('log level', 1);
 
     reload(server, app);
-    server
 
-    fs.readFile(path.join(__dirname, '/private/join/join.json'), 'utf8', function (err, json) {
+    io.sockets.on('connection', function (socket) {
 
-      if (err) {
-        console.log('Error reading json file: ' + err);
-        return false;
-      }
-      json = JSON.parse(json);
+      //Route socket connections
+      socket.on('header', function (data){
+        if(data.type){
+          switch(data.type){
+            case 'terminal':
 
-      io.sockets.on('connection', function (socket) {
+              fs.readFile(path.join(__dirname, '/private/join/join.json'), 'utf8', function (err, json) {
+                if (err) {
+                  console.log('Error reading json file: ' + err);
+                  return false;
+                }
+                json = JSON.parse(json);
+                terminal.start(socket, json, data, function(err){
+                  console.log('Terminal: Error: '+err);
+                });
+              });
 
-        socket.emit('command', 'clear');
-        socket.emit('terminalOutput', { output: json.desktop.connect});
-
-        socket.on('terminalInput', function (data) {
-          if(data.input){
-            if(data.input.toLowerCase() === "clear"){
-              socket.emit('command', 'clear');
-            }else if(data.input.toLowerCase() === "motd"){
-              socket.emit('terminalOutput', { output: json.desktop.connect});
-            }else if(data.input.toLowerCase() === "broadcast"){
-              socket.broadcast.emit('terminalOutput', { output: "\n"+data.input });
-              socket.emit('terminalOutput', { output: data.input });
-            }else{
-              var cmd = data.input.split(' ');
-
-              switch(cmd[0].toLowerCase()){
-                case 'guild':
-
-                  if(!cmd[1]){
-                    socket.emit('terminalOutput', { output: 'Usage: `guild [options] \n\nOptions:\n--start:     Begin signup wizard.\n-h            Display this page.`' });
-                  }else if(cmd[1] == '--start'){
-                    socket.emit('terminalOutput', { output: 'Please enter your first name:' });
-                  }else{
-                    socket.emit('terminalOutput', { output: 'Usage: `guild [options] \n\nOptions:\n--start:     Begin signup wizard.\n-h            Display this page.`' });
-                  }
-
-                  break;
-                default:
-                  socket.emit('terminalOutput', { output: data.input });
-                  break;
-              }
-
-              //socket.emit('terminalOutput', { output: data.input });
-            }
+              break;
           }
-        });
+        }
       });
+
     });
 });
 

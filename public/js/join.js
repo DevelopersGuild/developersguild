@@ -1,16 +1,22 @@
 (function($){
 
-	var socket = io.connect('http://'+window.location.hostname+':33841', {'connect timeout': 4000})
+	var socket = io.connect('http://'+window.location.hostname+':33841')
 	  , history = []
 	  , historyPointer = 0;
 
+	socket.emit('header', {
+		  type: 'terminal'
+		, device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+	});
+
 	$('#terminalInput').on('keydown', function(e){
 		if(e.which === 13){
+			e.preventDefault();
 			var val = _.escape($(this).val());
 			$(this).val('');
-			$('#terminalOutput').append('\n'+'&gt; '+val+'\n');
+			$('#terminalOutput').append('\n'+'&gt; '+val+'');
 			socket.emit('terminalInput', { input: val });
-			history.push(val);
+			history.push($(document.createElement('div')).html(val).text());
 			historyPointer = history.length;
 		}else if(e.which === 38){
 			e.preventDefault();
