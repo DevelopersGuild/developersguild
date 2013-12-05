@@ -94,7 +94,26 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
               socket.broadcast.emit('terminalOutput', { output: "\n"+data.input });
               socket.emit('terminalOutput', { output: data.input });
             }else{
-              socket.emit('terminalOutput', { output: data.input });
+              var cmd = data.input.split(' ');
+
+              switch(cmd[0].toLowerCase()){
+                case 'guild':
+
+                  if(!cmd[1]){
+                    socket.emit('terminalOutput', { output: 'Usage: `guild [options] \n\nOptions:\n--start:     Begin signup wizard.\n-h            Display this page.`' });
+                  }else if(cmd[1] == '--start'){
+                    socket.emit('terminalOutput', { output: 'Please enter your first name:' });
+                  }else{
+                    socket.emit('terminalOutput', { output: 'Usage: `guild [options] \n\nOptions:\n--start:     Begin signup wizard.\n-h            Display this page.`' });
+                  }
+
+                  break;
+                default:
+                  socket.emit('terminalOutput', { output: data.input });
+                  break;
+              }
+
+              //socket.emit('terminalOutput', { output: data.input });
             }
           }
         });
