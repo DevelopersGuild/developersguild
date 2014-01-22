@@ -12,6 +12,7 @@
         "reload": "0.1.0",
         "node-sass": "0.7.0",
         "underscore": "1.5.2",
-        "colors": "1.6.2" 
+        "colors": "0.6.2",
+        "validator": "2.0.0"
     }
 }

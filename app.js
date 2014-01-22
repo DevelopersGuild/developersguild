@@ -9,7 +9,7 @@ var newrelic = require('newrelic')
   , assert = require('assert')
   , sass = require('node-sass')
   , colors = require('colors')
-  , terminal = require('./modules/terminal.js');
+  , terminal = require('./modules/terminal/terminal.js');
 
 fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
     if (err) {
@@ -23,7 +23,7 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
     var app = express()
       , publicDir = path.join(__dirname, config.fs.publicDir)
       , clientDir = path.join(__dirname, config.fs.clientDir)
-      , db = require('mongojs').connect(config.mongo.ip+'/'+config.mongo.db, [app.settings.env]);
+      , db = require('mongojs').connect(config.mongo.ip+'/'+config.mongo.db);
 
     app.configure(app.settings.env, function(){
         app.set('port', config.env[app.settings.env].port);
@@ -79,17 +79,11 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
         if(data.type){
           switch(data.type){
             case 'terminal':
-
-              fs.readFile(path.join(__dirname, '/private/join/join.json'), 'utf8', function (err, json) {
-                if (err) {
-                  console.log('Error reading json file: ' + err);
-                  return false;
-                }
-                json = JSON.parse(json);
-                terminal.start(socket, json, data, function(err){
-                  console.log('Terminal: Error: '+err);
+                terminal().start(socket, db, data, (data.init) ? data.init : null, function(err){
+                  if(err){
+                    console.log('Terminal: Error: '+err);
+                  }
                 });
-              });
 
               break;
           }
