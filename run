@@ -1,0 +1,3 @@
+#!/bin/sh
+
+forever start -al ~/log/app/production/forever.log -o ~/log/app/production/o.log -e ~/log/app/production/e.log app.js

@@ -4,10 +4,15 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "newrelic": "1.1.1",
         "express": "3.4.3",
-        "mongojs" : "0.9.6",
+        "mongojs": "0.9.6",
+        "socket.io": "0.9.16",
         "path": "0.4.9",
         "reload": "0.1.0",
-        "node-sass": "0.7.0" 
+        "node-sass": "0.7.0",
+        "underscore": "1.5.2",
+        "colors": "0.6.2",
+        "validator": "2.0.0"
     }
 }
