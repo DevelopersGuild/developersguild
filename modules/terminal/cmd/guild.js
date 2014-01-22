@@ -1,13 +1,8 @@
 //I am extremely ashamed of this code, but it works so fuck it.
 module.exports = function(){
-
-	//console.log("$$$$$$$$$");
-
 	var fs = require('fs')
 	  , db
 	  , guildMembers
-	  //, signupStep = null
-	  //, signupData = {}
 	  , validator = require('validator');
 
 	function command(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, callback){
@@ -64,13 +59,7 @@ module.exports = function(){
 	}
 
 	function signup(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, callback){
-		
-		//console.dir(getPersistantData);
-
 		getPersistantData(socketId, 'signupStep', function (err, signupStep){
-
-			//console.log(signupStep);
-
 			if(err){
 				callback('signup not initiated.');
 				return;
@@ -95,7 +84,6 @@ module.exports = function(){
 				return {
 					  firstName: function(data, callback){
 					      if(data){
-					      	  //console.log(data);
 
 					      	  try{
 					      	  	validator.check(data).isAlpha().len(1,64);
@@ -126,7 +114,6 @@ module.exports = function(){
 					  }
 					, lastName: function(data, callback){
 						  if(data){
-					      	  //console.log(data);
 
 					      	  try{
 					      	  	validator.check(data).isAlpha().len(1,64);
@@ -156,7 +143,6 @@ module.exports = function(){
 					  }
 					, email: function(data, callback){
 						if(data){
-					      	  //console.log(data);
 
 					      	  try{
 					      	  	validator.check(data).isEmail().len(1,100);
@@ -170,8 +156,6 @@ module.exports = function(){
 
 					      	  guildMembers.find({email: data}, function(err, results){
 								    typeof callback === 'function' && callback((err) ? err:false);
-								    
-								    //console.dir(results);
 
 								    if(results[0]){
 								    	output({output: 'Email address already exists.\n'});
@@ -251,9 +235,6 @@ module.exports = function(){
 			}
 
 		});
-
-		
-		
 	}
 
 	return {

@@ -6,7 +6,6 @@ module.exports = function(){
 		callback(false);
 
 	}
-
 	return {
 		command: command
 	}

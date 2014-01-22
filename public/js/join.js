@@ -10,9 +10,6 @@
 		  type: 'terminal',
 		  init: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 400 ? 'motd -m' : 'motd -d'
 	});
-
-	//alert(window.innerWidth);
-
 	var terminal = (function(){
 		return {
 			prompt: ''
@@ -55,21 +52,14 @@
 	});
 
 	socket.on('terminalOutput', function (data) {
-
-		//var terminator = data.substr()
-
-		//console.log(data.output);
-
 		$('#terminalOutput').append(data.output);
 		$('#terminalOutput').scrollTop($('#terminalOutput')[0].scrollHeight);
-		//$('html, body').scrollTop($(document).height()-$(window).height());
 	});
 	socket.on('connect', function(){
 	});
 	
 	socket.on('command', function (data){
 		data = data.split(' ');
-		//console.log(data);
 		if(typeof terminal[data[0]] === 'function'){
 			terminal[data[0]](data[1] ? data[1] : null, data[2] ? data[2] : null);
 		}
@@ -92,6 +82,4 @@
 	$(window).on('resize', function(){
 		windowResize();
 	});
-
-
 })(jQuery);

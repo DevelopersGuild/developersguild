@@ -1,8 +1,5 @@
 //I am extremely ashamed of this code, but it works so fuck it.
 module.exports = function(){
-
-	//console.log("#####");
-
 	var socket
 	  , db
 	  , fs = require('fs')
@@ -113,8 +110,6 @@ module.exports = function(){
 	function setPersistantData(socketId, dataKey, dataValue, callback){
 		if(typeof persistantData[socketId] === "undefined") persistantData[socketId] = {};
 		
-		//console.log(socketId, dataKey, dataValue);
-
 		persistantData[socketId][dataKey] = dataValue;
 
 		typeof callback === 'function' && callback(false);
@@ -258,7 +253,6 @@ module.exports = function(){
 				callback('Unable to open command file.');
 				return;
 			}
-			//console.dir(socket);
 			cmdFile.command(db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, function (err){
 				if(err){
 					callback(err);
