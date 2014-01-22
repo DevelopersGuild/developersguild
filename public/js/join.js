@@ -8,7 +8,7 @@
 
 	socket.emit('header', {
 		  type: 'terminal',
-		  init: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'motd -m' : 'motd -d'
+		  init: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 400 ? 'motd -m' : 'motd -d'
 	});
 
 	//alert(window.innerWidth);
