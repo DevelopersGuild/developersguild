@@ -121,7 +121,7 @@ module.exports = function(){
 					      	  
 					      }else{
 							  output('command', 'setPrompt &gt;&nbsp;');
-	    				      output({output: 'Please enter your first name. Enter \'exit\' at any time to quit:\n'})
+	    				      output({output: 'Please enter your first name:\n'})
 					      }
 					  }
 					, lastName: function(data, callback){

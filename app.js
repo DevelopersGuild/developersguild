@@ -55,6 +55,10 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
         });
     });
 
+    app.get('/', function(req, res){
+        res.redirect('/join');
+    });
+
     app.get('*', function(req, res) {
         fs.exists(path.join(publicDir, req.url), function(exists) {
             if(exists){

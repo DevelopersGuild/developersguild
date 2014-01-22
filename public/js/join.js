@@ -1,6 +1,6 @@
 (function($){
 
-	var socket = io.connect('http://'+window.location.hostname+':33841', {
+	var socket = io.connect('http://'+window.location.host, {
           'force new connection': true
 	  })
 	  , history = []
@@ -11,6 +11,8 @@
 		  init: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'motd -m' : 'motd -d'
 	});
 
+	//alert(window.innerWidth);
+
 	var terminal = (function(){
 		return {
 			prompt: ''
@@ -20,7 +22,7 @@
 		  , setPrompt: function(prompt){
 		  		terminal.prompt = prompt;
 		  		$('#terminalPrompt').html(prompt);
-		  		$('#terminalInput').css('width', (686 - $('#terminalPrompt').width()) + 'px');
+		  		windowResize();
 		    }
 		}
 	})();
@@ -53,18 +55,43 @@
 	});
 
 	socket.on('terminalOutput', function (data) {
+
+		//var terminator = data.substr()
+
+		//console.log(data.output);
+
 		$('#terminalOutput').append(data.output);
 		$('#terminalOutput').scrollTop($('#terminalOutput')[0].scrollHeight);
+		//$('html, body').scrollTop($(document).height()-$(window).height());
 	});
 	socket.on('connect', function(){
 	});
 	
 	socket.on('command', function (data){
 		data = data.split(' ');
-		console.log(data);
+		//console.log(data);
 		if(typeof terminal[data[0]] === 'function'){
 			terminal[data[0]](data[1] ? data[1] : null, data[2] ? data[2] : null);
 		}
 	});
+
+	function windowResize(){
+		if(window.innerWidth < 400){
+			$("#terminalInput").width(window.innerWidth - $("#terminalPrompt").width() - 30);
+			$("#terminal").css('max-width', window.innerWidth);
+			$("#terminalOutput").css('max-width', window.innerWidth);
+		}else{
+			$("#terminalInput").width(370 - $("#terminalPrompt").width());
+			$("#terminal").css('max-width', 700);
+			$("#terminalOutput").css('max-width', 700);
+		}
+		
+	};
+	windowResize();
+
+	$(window).on('resize', function(){
+		windowResize();
+	});
+
 
 })(jQuery);
