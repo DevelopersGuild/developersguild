@@ -89,6 +89,7 @@ module.exports = function(){
 				deletePersistantData(socketId, function (err){
 					releaseInput('guild', function (err){
 						typeof callback === 'function' && callback((err) ? err:false);
+						return;
 					});
 				});
 			}
