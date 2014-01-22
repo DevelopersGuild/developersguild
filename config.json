@@ -1,26 +1,20 @@
 {
-<<<<<<< HEAD
-	"env": "production",
-	"development":  { 
-		"port": 33840
-=======
-	"env": {
-		"use": "production",
-		"development":  { 
-			"port": 33840
-	    }
-	    , "production": { 
-	    	"port": 33841
-	    }
+        "env": {
+                "use": "production",
+                "development":  { 
+                        "port": 33840
+            }
+            , "production": { 
+                    "port": 33841
+            }
     },
     "mongo": {
-    	"ip": "localhost",
-    	"db": "developersguild"
+            "ip": "localhost",
+            "db": "developersguild"
     },
     "fs": {
-    	"publicDir": "/public",
-    	"clientDir": "/client",
-    	"scss": "/scss"
->>>>>>> development
+            "publicDir": "/public",
+            "clientDir": "/client",
+            "scss": "/scss"
     }
 }
