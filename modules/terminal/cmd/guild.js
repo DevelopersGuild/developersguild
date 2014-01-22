@@ -86,12 +86,9 @@ module.exports = function(){
 			}
 
 			if((typeof command === 'string' && command.toLowerCase() === 'exit') || typeof signupStep === "undefined" || signupStep == null){
-				deletePersistantData(socketId, function (err){
-					releaseInput('guild', function (err){
-						typeof callback === 'function' && callback((err) ? err:false);
-						return;
-					});
-				});
+				deletePersistantData(socketId);
+				releaseInput('guild');
+				return;
 			}
 
 			var steps = function(data, callback){
