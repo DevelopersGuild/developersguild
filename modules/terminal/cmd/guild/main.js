@@ -211,7 +211,7 @@ module.exports = function(){
 									  	  email: email
 									  	, firstName: firstName
 									  	, lastName: lastName
-									  	, ip: socket.handshake.address.address
+									  	//, ip: socket.handshake.address.address //this isn't working in production due to nginx reverse proxy
 									  	, timestamp: new Date()
 									  }, function(err, result){
 									  	  if(err){

@@ -14,6 +14,9 @@ module.exports = function(){
 
 
 	function start(socketLink, dbLink, headers, init, callback){
+		
+		console.dir(socketLink.handshake.address)
+
 		if(!socketLink){
 			callback('Invalid socket link');
 			return;
@@ -171,7 +174,7 @@ module.exports = function(){
 			callback('No headers recieved.');
 			return;
 		}
-		
+
 		//Setup cmdFiles object
 		fs.readdir(__dirname+'/cmd', function (err, data){
 			if(err){
