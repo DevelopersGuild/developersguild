@@ -5,16 +5,17 @@ module.exports = function(){
 	  , guildMembers
 	  , validator = require('validator');
 
-	function command(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, callback){
+	function command(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socket, callback){
 
-		db = dbLink;
+		var db = dbLink
+		  , socketId = socket.id;
 
 		var commands = function (callback){
 			return {
 				s: function (command, callback){
 
 					setPersistantData(socketId, 'signupStep', 'firstName', function (err){
-						signup(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, null, socketId, callback);
+						signup(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, null, socket, callback);
 
 						captureInput('guild', 'signup', function(err){
 							if(err){
@@ -58,7 +59,10 @@ module.exports = function(){
 
 	}
 
-	function signup(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, callback){
+	function signup(dbLink, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socket, callback){
+		var socketId = socket.id;
+
+
 		getPersistantData(socketId, 'signupStep', function (err, signupStep){
 			if(err){
 				callback('signup not initiated.');
@@ -207,6 +211,8 @@ module.exports = function(){
 									  	  email: email
 									  	, firstName: firstName
 									  	, lastName: lastName
+									  	, ip: socket.handshake.address.address
+									  	, timestamp: new Date()
 									  }, function(err, result){
 									  	  if(err){
 									  	      output({output: 'Error saving data. Please try again.\n'})				        

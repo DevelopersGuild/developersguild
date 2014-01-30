@@ -3,7 +3,7 @@ module.exports = function(){
 	var fs = require('fs');
 
 	function init(fs, callback){
-		fs.readFile(__dirname+'/motd/config.json', 'utf8', function (err, config) {
+		fs.readFile(__dirname+'/config.json', 'utf8', function (err, config) {
 			if (err) {
 			  callback('Error reading config file: ' + err);
 			  return;

@@ -14,7 +14,6 @@ module.exports = function(){
 
 
 	function start(socketLink, dbLink, headers, init, callback){
-
 		if(!socketLink){
 			callback('Invalid socket link');
 			return;
@@ -33,7 +32,7 @@ module.exports = function(){
 				return;
 			}
 			
-			output('command', 'clear');
+			output('terminalInit', 'true');
 			output('command', 'setPrompt /bin/dgsh&gt;&nbsp;');
 			if(init){
 
@@ -43,7 +42,7 @@ module.exports = function(){
 		    			callback(err);
 		    			return;
 		    		}
-		    		input(validData, socketLink.id, function (err){
+		    		input(validData, socketLink, function (err){
 		    			if(err){
 		    				callback(err);
 		    				return;
@@ -74,7 +73,7 @@ module.exports = function(){
 								return;
 							}
 
-							cmdFile[inputCapture.methodName](db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, validData, socketLink.id, function (err){
+							cmdFile[inputCapture.methodName](db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, validData, socketLink, function (err){
 								if(err){
 									callback(err);
 									return;
@@ -89,7 +88,7 @@ module.exports = function(){
 							return;
 		    			}
 		    		}else{
-			    		input(validData, socketLink.id, function (err){
+			    		input(validData, socketLink, function (err){
 			    			if(err){
 			    				callback(err);
 			    				return;
@@ -107,6 +106,7 @@ module.exports = function(){
 		});
 	}
 
+	//Could have used socket.get and socket.set for the next four methods
 	function setPersistantData(socketId, dataKey, dataValue, callback){
 		if(typeof persistantData[socketId] === "undefined") persistantData[socketId] = {};
 		
@@ -171,25 +171,49 @@ module.exports = function(){
 			callback('No headers recieved.');
 			return;
 		}
-
+		
 		//Setup cmdFiles object
 		fs.readdir(__dirname+'/cmd', function (err, data){
 			if(err){
 				callback('Error reading cmd dir: '+err);
 				return;
 			}
-			for(var i = 0; i < data.length; i++){
-				if(typeof data[i] == 'string' && data[i].match(/\.js\b/)){
-					cmdFiles[data[i].substr(0, data[i].search(/\.js\b/))] = __dirname+'/cmd/'+data[i];
+
+			var numIterations = data.length-1
+			  , currentIteration = 0
+			  , startTime = new Date()
+			  , finishReport = function(){
+			  		currentIteration++;
+					if(currentIteration >= numIterations){
+						typeof callback === 'function' && callback(false);
+					}
 				}
+
+			for(var i = 0; i < data.length; i++){
+				
+
+				(function(dirname, finishReport){
+					fs.stat(__dirname+'/cmd/'+dirname, function (err, stat) {
+						
+						if(stat.isDirectory()){
+							fs.exists(__dirname+'/cmd/'+dirname+'/main.js', function (exists){
+								if(exists){
+									cmdFiles[dirname] = __dirname+'/cmd/'+dirname+'/main.js';	
+								}
+								finishReport();
+							});
+
+
+						}
+					});
+				})(data[i], finishReport);
 			}
 			
-			typeof callback === 'function' && callback(false);
 		});
 
 	}
 
-	function input(cmd, socketId, callback){
+	function input(cmd, socket, callback){
 
 		var parsedCmd = cmd.replace(/&quot;/g, '\"').replace(/&#x27;/g, '\'').match(/(["'])(?:\\?.)*?\1|\S+/g);
 
@@ -235,7 +259,7 @@ module.exports = function(){
 			}
 		}
 
-		propogate(command, socketId, function (err){
+		propogate(command, socket, function (err){
 			if(err){
 				callback(err);
 			}
@@ -246,14 +270,14 @@ module.exports = function(){
 
 	}
 
-	function propogate(command, socketId, callback){
+	function propogate(command, socket, callback){
 		if(cmdFiles[command.name]){
 			var cmdFile = require(cmdFiles[command.name]);
 			if(!cmdFile){
 				callback('Unable to open command file.');
 				return;
 			}
-			cmdFile.command(db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, function (err){
+			cmdFile.command(db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socket, function (err){
 				if(err){
 					callback(err);
 					return;
