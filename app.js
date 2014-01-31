@@ -46,6 +46,7 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
     });
     
     app.get('/join', function(req, res){
+        console.dir(req.headers);
         fs.exists(path.join(publicDir, 'join.html'), function(exists) {
             if(exists){
                 res.sendfile(path.join(publicDir, 'join.html'));
@@ -53,6 +54,10 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
                 res.send('error finding file.');
             }
         });
+    });
+
+    app.get('/interestform', function(req, res){
+        res.redirect('http://eepurl.com/Nw0Mj');
     });
 
     app.get('/', function(req, res){
@@ -80,6 +85,9 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
 
       //Route socket connections
       socket.on('header', function (data){
+
+        console.dir(socket.handshake);
+
         if(data.type){
           switch(data.type){
             case 'terminal':

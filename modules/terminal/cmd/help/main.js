@@ -3,7 +3,7 @@ module.exports = function(){
 	var fs = require('fs');
 
 	function init(fs, callback){
-		/*fs.readFile(__dirname+'/motd/config.json', 'utf8', function (err, config) {
+		fs.readFile(__dirname+'/config.json', 'utf8', function (err, config) {
 			if (err) {
 			  callback('Error reading config file: ' + err);
 			  return;
@@ -13,7 +13,7 @@ module.exports = function(){
 
 			callback(false, config);
 
-	    });*/
+	    });
 	}
 
 	function command(db, captureInput, releaseInput, setPersistantData, getPersistantData, deletePersistantData, output, command, socketId, callback){
@@ -29,27 +29,11 @@ module.exports = function(){
 					  //Default
 					  info: function(){
 						  output({ output: config.info});
-					  }  
-					, flags: function (){
-						  output({ output: config.flags})
-					  }
-					, h: function (){
-						  commands.info();
-						  commands.flags();
-					  }
-
-					  //Custom
-					, d: function (){
-					      output({ output: config.d});
-					  }
-					, m: function (){
-						  output({ output: config.m});
 					  }
 				}
 			}(config, output, callback);
 
 			var aliases = {
-					  help: 'h'
 				}
 			  , queue = [];
 

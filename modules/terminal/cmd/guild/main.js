@@ -211,8 +211,12 @@ module.exports = function(){
 									  	  email: email
 									  	, firstName: firstName
 									  	, lastName: lastName
-									  	//, ip: socket.handshake.address.address //this isn't working in production due to nginx reverse proxy
-									  	, timestamp: new Date()
+									  	, signup: {
+									  		  ip: socket.handshake.headers['x-real-ip']
+										  	, referer: socket.handshake.headers['referer']
+										  	, userAgent: socket.handshake.headers['user-agent']
+										  	, timestamp: new Date()
+									  	}
 									  }, function(err, result){
 									  	  if(err){
 									  	      output({output: 'Error saving data. Please try again.\n'})				        

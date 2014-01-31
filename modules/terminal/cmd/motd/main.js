@@ -71,7 +71,7 @@ module.exports = function(){
 						queue.push(aliases[flag]);
 					}else{
 						callback('illegal option: '+flag);
-						output({output: 'motd: illegal option: '+flag});
+						output({output: 'motd: illegal option: '+flag+'\n'});
 						//commands.help();
 						return;
 					}

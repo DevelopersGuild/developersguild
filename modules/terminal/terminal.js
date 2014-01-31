@@ -15,7 +15,7 @@ module.exports = function(){
 
 	function start(socketLink, dbLink, headers, init, callback){
 		
-		console.dir(socketLink.handshake.address)
+		//console.dir(socketLink.handshake.address)
 
 		if(!socketLink){
 			callback('Invalid socket link');
@@ -299,7 +299,7 @@ module.exports = function(){
 			callback('Error: no data received.');
 			return;
 		}
-		callback(false, data);
+		typeof callback === 'function' && callback(false, data);
 	}
 
 	function output(/*[event], data, [callback]*/){
