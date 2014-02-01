@@ -60,6 +60,15 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
         res.redirect('http://eepurl.com/Nw0Mj');
     });
 
+    app.get('/mailchimp-hook', function(req, res){
+        mailChimpTest = db.collection('mailChimpTest');
+        mailChimpTest.save({
+          req: req
+        }, function (err, data){
+          res.send('');
+        });
+    });    
+
     app.get('/', function(req, res){
         res.redirect('/join');
     });
