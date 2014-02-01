@@ -217,7 +217,7 @@ module.exports = function(){
 										  	, userAgent: socket.handshake.headers['user-agent']
 										  	, timestamp: new Date()
 									  	}
-									  }, function(err, result){
+									  }, function (err, result){
 									  	  if(err){
 									  	      output({output: 'Error saving data. Please try again.\n'})				        
 									  	  	  releaseInput('guild', function(){

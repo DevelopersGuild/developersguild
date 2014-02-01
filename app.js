@@ -61,9 +61,10 @@ fs.readFile(path.join(__dirname, '/config.json'), 'utf8', function (err, data) {
     });
 
     app.get('/mailchimp-hook', function(req, res){
-        mailChimpTest = db.collection('mailChimpTest');
+      console.dir(req);
+        var mailChimpTest = db.collection('mailChimpTest');
         mailChimpTest.save({
-          req: req
+          'req': req.headers
         }, function (err, data){
           res.send('');
         });
