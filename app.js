@@ -1,5 +1,5 @@
-var config = require('./config')
-    newrelic = require('newrelic')
+var config = require('./config.js')
+  , newrelic = require('newrelic')
   , express = require('express')
   , http = require('http')
   , _ = require('underscore')
@@ -52,6 +52,10 @@ app.get('/join', function(req, res){
 
 app.get('/interestform', function(req, res){
     res.redirect('http://eepurl.com/Nw0Mj');
+});
+
+app.get('/googledrive', function(req, res){
+    res.redirect('https://drive.google.com/folderview?id=0B51LFmQf5HbvN3Z2MjY0dExCNzg&usp=sharing');
 });
 
 app.get('/mailchimp-hook', function(req, res){
