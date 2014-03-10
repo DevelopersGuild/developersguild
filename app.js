@@ -72,14 +72,19 @@ app.get('/', function(req, res){
     res.redirect('/join');
 });
 
+app.get('/index.html', function(req, res){
+    res.redirect('/join');
+});
+
 app.get('*', function(req, res) {
-    fs.exists(path.join(publicDir, req.url), function(exists) {
-        if(exists){
-            res.sendfile(path.join(publicDir, req.url));
-        }else{
-            res.send('404');
-        }
-    });
+    res.send('404');
+    // fs.exists(path.join(publicDir, req.url), function(exists) {
+    //     if(exists){
+    //         res.sendfile(path.join(publicDir, req.url));
+    //     }else{
+    //         res.send('404');
+    //     }
+    // });
 });
 
 var server = app.listen(app.get('port'), function(){
