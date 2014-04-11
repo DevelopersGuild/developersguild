@@ -80,7 +80,7 @@ app.get('/index.html', function(req, res) {
 
 app.get('*', function(req, res) {
 
-    //file.serve(req, res);
+    file.serve(req, res);
 
     // res.send('404');
 
@@ -88,13 +88,13 @@ app.get('*', function(req, res) {
     //     return respond('That was evil.');
     // }
 
-    fs.exists(path.join(publicDir, req.url), function(exists) {
-        if (exists) {
-            res.sendfile(path.join(publicDir, req.url));
-        } else {
-            res.send('404');
-        }
-    });
+    // fs.exists(path.join(publicDir, req.url), function(exists) {
+    //     if (exists) {
+    //         res.sendfile(path.join(publicDir, req.url));
+    //     } else {
+    //         res.send('404');
+    //     }
+    // });
 });
 
 var server = app.listen(app.get('port'), function() {
