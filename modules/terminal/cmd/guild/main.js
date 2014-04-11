@@ -1,4 +1,3 @@
-//I am extremely ashamed of this code, but it works so fuck it.
 module.exports = function(){
   var fs = require('fs')
     , db
