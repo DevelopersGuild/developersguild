@@ -71,7 +71,7 @@ app.get('/mailchimp-hook', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-    res.redirect('/join');
+    res.redirect('/googledrive');
 });
 
 app.get('/index.html', function(req, res) {
