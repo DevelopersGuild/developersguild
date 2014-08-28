@@ -129,8 +129,12 @@ body {
     text-align: center;
 }
 
-.suave p {
+.suave h1, .suave p{
     text-shadow: 2px 2px 3px black;
+}
+
+.suave h1 {
+    font-weight:100;
 }
 
 @media (max-width:1083px) {
