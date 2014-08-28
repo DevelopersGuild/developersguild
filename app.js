@@ -47,7 +47,7 @@ app.get('/join', function(req, res) {
         if (exists) {
             res.sendfile(path.join(publicDir, 'join.html'));
         } else {
-            res.send('error finding file.');
+            res.send('error finding file.');   
         }
     });
 });
@@ -71,11 +71,23 @@ app.get('/mailchimp-hook', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-    res.redirect('/interestform');
+    fs.exists(path.join(publicDir, 'index.html'), function(exists) {
+        if (exists) {
+            res.sendfile(path.join(publicDir, 'index.html'));
+        } else {
+            res.send('error finding file.');   
+        }
+    });
 });
 
 app.get('/index.html', function(req, res) {
-    res.redirect('/join');
+    fs.exists(path.join(publicDir, 'index.html'), function(exists) {
+        if (exists) {
+            res.sendfile(path.join(publicDir, 'index.html'));
+        } else {
+            res.send('error finding file.');   
+        }
+    });
 });
 
 app.get('*', function(req, res) {

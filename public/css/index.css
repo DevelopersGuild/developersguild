@@ -1,0 +1,398 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    display: block;
+    width:100%;
+    padding:0px;
+}
+
+.row {
+    margin: 0px;
+}
+
+.overlay {
+    background-color: rgba(34, 26, 6, 0.5);
+    width: 100%;
+    /*height: 100%;*/
+    display: block;
+}
+
+.buffer {
+    padding-top:100px;
+}
+
+.fixed-background {
+    background-attachment: fixed;
+}
+
+
+/*////////LANDING PAGE////////*/
+
+.landing {
+    background-size: cover;
+    background-position: center;
+    background-image: url("../img/the-mlc.jpg");
+    height: 100%;
+    min-height: 720px;
+}
+
+.landingcont {
+    height:100%;
+    margin-top: 10%;
+}
+
+@media only screen and (max-width: 320px) {
+    /* styles for narrow screens */
+}
+
+
+.logo {
+    margin-top:20px;
+}
+
+.logo > img {
+    height: 35vh;
+    max-height: 320px;
+    min-height: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+.tagline {
+    margin-top: 25px;
+    /*width: 650px;*/
+    text-shadow: 2px 2px 3px rgb(57, 57, 57);
+}
+
+.tagline span {
+    font-size: 2em;
+    line-height: 0.8em;
+    color:white;
+    opacity: 1;
+    font-weight: 300;
+    display: block;
+    margin: .67em 0;
+}
+
+.slides li {
+    text-transform: uppercase;
+}
+
+.landing #joinbutton {
+    margin-top:30px;
+    font-size:25px;
+    padding: 21px 37px;
+    background-clip: padding-box;
+    border: solid 5px rgba(255,255,255, 0.5);
+    box-shadow: 0px 0px 2px 2px rgba(50,50,50, 0.4);
+    transition: background-color 0.2s;
+}
+
+.landing #joinbutton:hover {
+    background-color: #61CC4C;
+    transition: background-color 0.2s;
+}
+
+/*override flexslider style*/
+.flexslider {
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin: 0px;
+    font-family:Courier;
+    font-size:1.0em;
+}
+
+/*////////INTRO SECTION////////*/
+
+.intro {
+    padding: 100px 0px 90px 0px;
+    color:white;
+    /*background-color: rgba(34, 49, 59, 1);*/
+    background-color: rgba(42, 60, 82, 1);
+    box-shadow: inset 0 1em 1em -1em black;
+    /*border-top: rgb(214,214,214) 12px solid;*/
+    border-bottom: rgb(37, 38, 44) 3px solid;
+}
+
+.suave {
+    text-align: left;
+    font-size: 1.45em;
+    font-weight:300;
+    margin: auto;
+    /*border-bottom: 10px solid gray;*/
+    display: inline-block;
+    text-align: center;
+}
+
+.suave p {
+    text-shadow: 2px 2px 3px black;
+}
+
+@media (max-width:1083px) {
+    .suave {
+        width: 80%;
+    }
+}
+
+/*/////////TRAITS SECTION//////////*/
+.traits {
+    text-align: center;
+    top:200%;
+   /* height: 100%;*/ /*why 110%?*/  
+    /*I feel 75% is too narraw for two-lines logo -Buce*/
+    background-size: cover;
+    background-attachment: fixed;
+    /*-webkit-filter: blur(3px); -moz-filter: blur(3px); -o-filter: blur(3px); -ms-filter: blur(3px); filter: blur(3px);*/
+    background-position: center;
+    /*background-image: url("http://c.fastcompany.net/multisite_files/fastcompany/imagecache/1280/poster/2014/02/3026601-poster-p-1-10-steps-to-pulling-off-a-killer-hardware-hackathon.jpg");*/
+    background-color: rgb(160, 176, 196);
+    padding-top: 100px;
+    padding-bottom: 100px;
+    box-shadow: inset 0 -1em 1em -1em black;
+}
+
+.single_trait {
+    /*background-color: white;*/
+    text-align: center;
+    padding: 20px;
+}
+
+.single_trait img {
+    max-width: 60%;
+    margin-bottom: 20px;
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+    .single_trait img {
+        max-width: 80%;
+    }
+}
+
+.single_trait p {
+    font-size: 1.5em;
+    color:white;
+    margin-top: 15px;
+    letter-spacing: 1px;
+    font-weight: 200;
+    text-shadow: 2px 2px 3px rgba(57, 57, 57, 0.7);
+}
+
+
+/*/////////FAQ SECTION/////////*/
+.faq_title {
+    background-color: #eceff1;
+    padding: 100px 0px;
+    /* border-top: rgb(74, 77, 80) solid 10px; */
+    /* box-shadow: 0 20px 20px -20px white; */
+    /* border-bottom: rgb(220, 220, 220) solid 5px; */
+}
+
+.faq_title p {
+    margin: 0px;
+    font-size: 2.25em;
+    font-weight: 300;
+    color: #424242;
+}
+
+.faq {
+    box-shadow: inset 0 20px 20px -20px black, inset 0 -20px 20px -20px black;
+    /*height: 100%;*/
+    background-image: url("../img/us-720p.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    /* Retina-specific stuff here */
+    .faq {
+        background-image: url("../img/us-1920p.jpg");
+    }
+}
+
+.single_faq_wrapper {
+}
+
+.single_faq {
+    margin-bottom:15px;
+    padding: 15px 15px 5px 15px;
+    border-radius: 3px;
+    text-align: left;
+    /*border: 10px solid rgba(0, 0, 0, 0.7);*/
+    background-color: rgba(228, 234, 241, 0.7)
+}
+
+.single_faq > p {
+    font-size: 1.25em;
+    line-height: 1.75;
+    color: #424242;
+}
+
+.faq_q {
+    border-left: 4px solid rgb(92, 135, 222);
+    padding-left: 8px;
+    /*padding: 0 0 10px;*/
+}
+
+.faq_a {
+    font-weight: 300;
+}
+
+/*/////////////PING US SECTION///////////////*/
+.ping-us {
+    background-color: #eceff1;
+    padding-top: 100px;
+    padding-bottom: 150px;
+}
+
+.ping-us_title {
+    padding-bottom: 60px;
+}
+
+.ping-us_title > p {
+    font-size: 2.25em;
+    font-weight: 300;
+    color: #424242;
+}
+
+.ping-us_email {
+}
+
+.ping-us_email > p {
+    font-size: 1.5em;
+}
+
+/*/////////////GO TO TOP BUTTON SECTION///////////////*/
+#gotop {
+    display: none;
+    position: fixed;
+    width: 3.5vmax;
+    height: 3.5vmax;
+    opacity: 0.3;
+    right: 20px;
+    bottom: 20px;
+    background-color: #b0bec5;
+    cursor: pointer;
+    -moz-border-radius: 4%; 
+    -webkit-border-radius: 4%; 
+    border-radius: 100%;
+}
+
+/*/////////MODAL DIALOG/////////*/
+#modal {
+    width:70%;
+    border: 10px solid rgba(180,180,180,0.4);
+    background-color: rgb(253, 255, 240);
+    background-clip: padding-box;
+    position:absolute;
+    left:0;
+    right:0;
+    margin: 0 auto;
+    display: none;
+    top:30%;
+    text-align: left;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+#modal h3 {
+    margin: 0;
+}
+
+#modal > form {
+    margin: 0;
+}
+
+#modal .form-group {
+    margin: 0;
+}
+
+.sign-up {
+    padding-bottom: 1.75em;
+}
+
+.email-textedit {
+    padding-bottom: 1.75em;
+}
+
+.close-button {
+    opacity: 0.5;
+    position:absolute;
+    top:0;
+    right:0;
+    margin:10px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    opacity: 0.8;
+}
+
+.close-button:active {
+    opacity: 1.0;
+}
+
+.overlay_faq {
+    padding: 80px 0;
+}
+
+.faq-container {
+    width: 60%;
+}
+
+/********IPHONE 5 COLUMN FIX******/
+
+@media screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+
+    .overlay {
+        padding: 0;
+    }
+
+    .single_faq {
+        padding: 15px 15px 5px 15px;
+    }
+
+    .single_faq > p {
+        line-height: 1.3;
+        font-size: 1.2em;
+    }
+
+    .col-sm-6 {
+        padding: 0;
+    }
+
+    .overlay_faq {
+        padding: 10px 0;
+    }
+
+    .faq-container {
+        width: 90%;
+    }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+
+    .overlay {
+
+    }
+
+    .faq-container {
+        width: 80%;
+    }
+
+    .single_faq {
+        padding: 15px 15px 5px 15px;
+    }
+}
