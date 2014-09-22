@@ -13,7 +13,7 @@ $(window).load(function() {
       trigger: 'button#joinbutton'
     });
 
-    if(window.location.hash && window.location.hash === 'join'){
+    if(window.location.hash && window.location.hash === '#join'){
       $('#modal').jqmShow()
     }
 
